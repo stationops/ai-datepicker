@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Date Picker Demo</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="../dist/aidatepicker.umd.js"></script> <!-- Replace with actual URL -->
+</head>
+<body>
+<div id="app">
+    <ai-date-picker @selected="onSelected" placeholder="e.g. next Friday" />
+</div>
+
+<script type="module">
+    const { createApp } = Vue;
+
+    createApp({
+        methods: {
+            onSelected(value) {
+                alert('You selected: ' + value);
+            }
+        }
+    })
+        .component('ai-date-picker', AIDatePicker) // UMD default export
+        .mount('#app');
+</script>
+</body>
+</html>

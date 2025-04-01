@@ -1,0 +1,36 @@
+<html lang="html">
+<head>
+    <script type="module" src="core/index.js"></script>
+    <title>AI DatePicker Demo</title>
+</head>
+
+
+<body>
+<label for="date">Date:</label> <input type="text" id="date" data-aidp="date">
+<button data-aidp-button="date">Go!</button>
+<div data-aidp-result="date"></div>
+
+<script>
+
+    document.getElementById('date').addEventListener('selected', function (e) {
+        console.log(e.detail)
+    })
+
+    document.getElementById('date').addEventListener('fetching', function (e) {
+        console.log('fetching')
+    })
+
+    document.getElementById('date').addEventListener('done', function (e) {
+        console.log('done')
+    })
+
+    document.getElementById('date').addEventListener('error', function (e) {
+        console.log(e.detail)
+    })
+
+</script>
+</body>
+</html>
+
+
+

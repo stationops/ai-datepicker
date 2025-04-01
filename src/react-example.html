@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>React AI Date Picker Demo</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="../dist/aidatepicker.react.umd.js"></script> <!-- Replace with your real path -->
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/javascript">
+    const { createElement } = React;
+    const { createRoot } = ReactDOM;
+
+    const App = () => {
+        return createElement(AIDatePicker, {
+            aidp: 'demo',
+            placeholder: 'Try typing: next Monday',
+            onSelected: (value) => {
+                alert('Selected date: ' + value);
+            },
+            onError: (err) => {
+                console.error('Fetch error:', err);
+            }
+        });
+    };
+
+    const root = createRoot(document.getElementById('root'));
+    root.render(createElement(App));
+</script>
+</body>
+</html>
