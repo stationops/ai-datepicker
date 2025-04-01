@@ -39,5 +39,6 @@ You can pass optional props to influence how the AI interprets and returns dates
 
 - [Website: aidatepicker.com](https://aidatepicker.com)
 - [NPM Package: ai-datepicker](https://www.npmjs.com/package/ai-datepicker)
+- [GitHub: ai-datepicker](https://github.com/stationops/ai-datepicker)
 
 

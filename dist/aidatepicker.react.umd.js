@@ -27,7 +27,6 @@
     };
 
     function AIDatepicker({
-      aidp = 'default',
       placeholder = 'eg: Next Monday',
       region,
       format,
@@ -35,17 +34,18 @@
       onFetching,
       onSelected,
       onError,
-      onDone
+      onDone,
+      initialQuery = '',
+      initialResult = ''
     }) {
-      const [query, setQuery] = react.useState('');
-      const [result, setResult] = react.useState('');
+      const [query, setQuery] = react.useState(initialQuery);
+      const [result, setResult] = react.useState(initialResult);
       const handleFetch = async () => {
         onFetching?.();
         const {
           data,
           error
-        } = await tryCatch(fetchDate(query, hint, region, format) // 🧠 Pass hint
-        );
+        } = await tryCatch(fetchDate(query, hint, region, format));
         if (error) {
           onError?.(error);
         } else {
@@ -55,17 +55,17 @@
         onDone?.(error);
       };
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
-        class: "aidp-date",
+        className: "aidp-date",
         placeholder: placeholder,
         value: query,
         onChange: e => setQuery(e.target.value),
         onKeyDown: e => e.key === 'Enter' && handleFetch()
       }), /*#__PURE__*/React.createElement("button", {
-        class: "aidp-button",
+        className: "aidp-button",
         type: "button",
         onClick: handleFetch
       }, "\u2714"), /*#__PURE__*/React.createElement("div", {
-        class: "aidp-result"
+        className: "aidp-result"
       }, result));
     }
 
