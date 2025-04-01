@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
-import {fetchDate, tryCatch} from "../core";
+import { useState } from 'react';
+import { fetchDate, tryCatch } from '../core';
 
-
-
-export default function AIDatepicker({ aidp = 'default', placeholder = 'Enter a date query', onFetching, onSelected, onError, onDone }) {
+export default function AIDatepicker({
+                                         aidp = 'default',
+                                         placeholder = 'eg: Next Monday',
+                                         region,
+                                         format,
+                                         hint,
+                                         onFetching,
+                                         onSelected,
+                                         onError,
+                                         onDone
+                                     }) {
     const [query, setQuery] = useState('');
     const [result, setResult] = useState('');
 
     const handleFetch = async () => {
         onFetching?.();
 
-        const { data, error } = await tryCatch(fetchDate(query));
+        const { data, error } = await tryCatch(
+            fetchDate(query, hint, region, format) // 🧠 Pass hint
+        );
 
         if (error) {
             onError?.(error);
@@ -25,16 +35,18 @@ export default function AIDatepicker({ aidp = 'default', placeholder = 'Enter a 
     return (
         <div>
             <input
+                class="aidp-date"
                 placeholder={placeholder}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleFetch()}
-                data-aidp={aidp}
             />
-            <button type="button" onClick={handleFetch} data-aidp-button={aidp}>
+            <button class="aidp-button"
+                    type="button"
+                    onClick={handleFetch}>
                 ✔
             </button>
-            <div data-aidp-result={aidp}>{result}</div>
+            <div  class="aidp-result">{result}</div>
         </div>
     );
 }

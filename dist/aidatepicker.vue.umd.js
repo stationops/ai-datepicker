@@ -4,10 +4,10 @@
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.AIDatepicker = factory(global.Vue));
 })(this, (function (vue) { 'use strict';
 
-    const fetchDate = async function(query) {
+    const fetchDate = async function(query, hint, region, format) {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const baseUrl = (window && window.AI_DATEPICKER_URL) || 'https://aidatepicker.com';
-        const response = await fetch(`${baseUrl}?date=${encodeURIComponent(query)}&timezone=${timezone}`);
+        const baseUrl = (window && window.AI_DATEPICKER_URL) || 'https://api.aidatepicker.com';
+        const response = await fetch(`${baseUrl}?date=${encodeURIComponent(query)}&timezone=${timezone}&hint=${hint || ''}&region=${region || ''}&format=${format || ''}`);
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
         return await response.text();
@@ -37,11 +37,25 @@
       },
       placeholder: {
         type: String,
-        default: 'Enter a date query'
+        default: 'eg: Next Monday'
+      },
+      hint: {
+        type: String,
+        required: false
+      },
+      region: {
+        type: String,
+        required: false
+      },
+      format: {
+        type: String,
+        required: false
       }
     },
       emits: ['fetching', 'error', 'selected', 'done'],
       setup(__props, { emit: __emit }) {
+
+    const props = __props;
 
     const emit = __emit;
 
@@ -52,7 +66,7 @@
     const handleFetch = async () => {
       emit('fetching');
 
-      const { data, error } = await tryCatch(fetchDate(query.value));
+      const { data, error } = await tryCatch(fetchDate(query.value, props.hint, props.region, props.format));
 
       if (error) {
         emit('error', error);
@@ -67,6 +81,7 @@
     return (_ctx, _cache) => {
       return (vue.openBlock(), vue.createElementBlock("div", null, [
         vue.withDirectives(vue.createElementVNode("input", {
+          class: "aidp-date",
           placeholder: __props.placeholder,
           "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => ((query).value = $event)),
           onKeydown: vue.withKeys(handleFetch, ["enter"]),
@@ -75,11 +90,15 @@
           [vue.vModelText, query.value]
         ]),
         vue.createElementVNode("button", {
+          class: "aidp-button",
           type: "button",
           onClick: handleFetch,
           "data-aidp-button": __props.aidp
         }, " ✔ ", 8 /* PROPS */, _hoisted_2),
-        vue.createElementVNode("div", { "data-aidp-result": __props.aidp }, vue.toDisplayString(result.value), 9 /* TEXT, PROPS */, _hoisted_3)
+        vue.createElementVNode("div", {
+          class: "aidp-result",
+          "data-aidp-result": __props.aidp
+        }, vue.toDisplayString(result.value), 9 /* TEXT, PROPS */, _hoisted_3)
       ]))
     }
     }

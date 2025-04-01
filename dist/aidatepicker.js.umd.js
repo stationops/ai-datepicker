@@ -3,10 +3,10 @@
     factory();
 })((function () { 'use strict';
 
-    const fetchDate = async function(query) {
+    const fetchDate = async function(query, hint, region, format) {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const baseUrl = (window && window.AI_DATEPICKER_URL) || 'https://aidatepicker.com';
-        const response = await fetch(`${baseUrl}?date=${encodeURIComponent(query)}&timezone=${timezone}`);
+        const baseUrl = (window && window.AI_DATEPICKER_URL) || 'https://api.aidatepicker.com';
+        const response = await fetch(`${baseUrl}?date=${encodeURIComponent(query)}&timezone=${timezone}&hint=${hint || ''}&region=${region || ''}&format=${format || ''}`);
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
         return await response.text();
@@ -38,7 +38,12 @@
                 bubbles: true
             }));
 
-            const result = await tryCatch(fetchDate(el.value));
+
+            const hint = el.getAttribute('data-aidp-hint');
+            const region = el.getAttribute('data-aidp-region');
+            const format = el.getAttribute('data-aidp-format');
+
+            const result = await tryCatch(fetchDate(el.value, hint, region, format));
             if(result.error){
                 el.dispatchEvent(new CustomEvent('error', {
                     detail: result.error,

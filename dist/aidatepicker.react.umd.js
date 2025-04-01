@@ -2,12 +2,12 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
     typeof define === 'function' && define.amd ? define(['react'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.AIDatepicker = factory(global.React));
-})(this, (function (React) { 'use strict';
+})(this, (function (react) { 'use strict';
 
-    const fetchDate = async function (query) {
+    const fetchDate = async function (query, hint, region, format) {
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const baseUrl = window && window.AI_DATEPICKER_URL || 'https://aidatepicker.com';
-      const response = await fetch(`${baseUrl}?date=${encodeURIComponent(query)}&timezone=${timezone}`);
+      const baseUrl = window && window.AI_DATEPICKER_URL || 'https://api.aidatepicker.com';
+      const response = await fetch(`${baseUrl}?date=${encodeURIComponent(query)}&timezone=${timezone}&hint=${hint || ''}&region=${region || ''}&format=${format || ''}`);
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
       return await response.text();
     };
@@ -28,20 +28,24 @@
 
     function AIDatepicker({
       aidp = 'default',
-      placeholder = 'Enter a date query',
+      placeholder = 'eg: Next Monday',
+      region,
+      format,
+      hint,
       onFetching,
       onSelected,
       onError,
       onDone
     }) {
-      const [query, setQuery] = React.useState('');
-      const [result, setResult] = React.useState('');
+      const [query, setQuery] = react.useState('');
+      const [result, setResult] = react.useState('');
       const handleFetch = async () => {
         onFetching?.();
         const {
           data,
           error
-        } = await tryCatch(fetchDate(query));
+        } = await tryCatch(fetchDate(query, hint, region, format) // 🧠 Pass hint
+        );
         if (error) {
           onError?.(error);
         } else {

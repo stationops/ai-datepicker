@@ -16,7 +16,12 @@ import {fetchDate, tryCatch} from "../core/index.js";
             bubbles: true
         }));
 
-        const result = await tryCatch(fetchDate(el.value))
+
+        const hint = el.getAttribute('data-aidp-hint');
+        const region = el.getAttribute('data-aidp-region');
+        const format = el.getAttribute('data-aidp-format');
+
+        const result = await tryCatch(fetchDate(el.value, hint, region, format))
         if(result.error){
             el.dispatchEvent(new CustomEvent('error', {
                 detail: result.error,

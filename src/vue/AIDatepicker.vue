@@ -9,7 +9,19 @@ const props = defineProps({
   },
   placeholder: {
     type: String,
-    default: 'Enter a date query'
+    default: 'eg: Next Monday'
+  },
+  hint: {
+    type: String,
+    required: false
+  },
+  region: {
+    type: String,
+    required: false
+  },
+  format: {
+    type: String,
+    required: false
   }
 });
 
@@ -22,7 +34,7 @@ const result = ref('');
 const handleFetch = async () => {
   emit('fetching');
 
-  const { data, error } = await tryCatch(fetchDate(query.value));
+  const { data, error } = await tryCatch(fetchDate(query.value, props.hint, props.region, props.format));
 
   if (error) {
     emit('error', error);
@@ -42,19 +54,16 @@ const handleFetch = async () => {
         :placeholder="placeholder"
         v-model="query"
         @keydown.enter="handleFetch"
-        :data-aidp="aidp"
     />
     <button
         class="aidp-button"
         type="button"
         @click="handleFetch"
-        :data-aidp-button="aidp"
     >
       ✔
     </button>
     <div
-        class="aidp-result"
-        :data-aidp-result="aidp">
+        class="aidp-result">
       {{ result }}
     </div>
   </div>

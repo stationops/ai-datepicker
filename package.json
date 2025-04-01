@@ -1,6 +1,6 @@
 {
   "name": "ai-datepicker",
-  "version": "1.0.6",
+  "version": "1.0.10",
   "description": "Smart date picker powered by AI for React, Vue and Vanilla JS",
   "exports": {
     ".": "./dist/aidatepicker.umd.js",
