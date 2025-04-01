@@ -23,17 +23,16 @@
         }
     };
 
-    const _hoisted_1 = ["placeholder", "data-aidp"];
-    const _hoisted_2 = ["data-aidp-button"];
-    const _hoisted_3 = ["data-aidp-result"];
+    const _hoisted_1 = ["placeholder"];
+    const _hoisted_2 = { class: "aidp-result" };
 
 
     var script = {
       __name: 'AIDatepicker',
       props: {
-      aidp: {
+      modelValue: {
         type: String,
-        default: 'default'
+        default: ''
       },
       placeholder: {
         type: String,
@@ -52,7 +51,7 @@
         required: false
       }
     },
-      emits: ['fetching', 'error', 'selected', 'done'],
+      emits: ['update:modelValue', 'fetching', 'error', 'selected', 'done'],
       setup(__props, { emit: __emit }) {
 
     const props = __props;
@@ -60,8 +59,11 @@
     const emit = __emit;
 
     const query = vue.ref('');
-    const result = vue.ref('');
+    const result = vue.ref(props.modelValue || '');
 
+    vue.watch(() => props.modelValue, (newVal) => {
+      result.value = newVal;
+    });
 
     const handleFetch = async () => {
       emit('fetching');
@@ -72,6 +74,7 @@
         emit('error', error);
       } else {
         result.value = data;
+        emit('update:modelValue', data);
         emit('selected', data);
       }
 
@@ -84,21 +87,16 @@
           class: "aidp-date",
           placeholder: __props.placeholder,
           "onUpdate:modelValue": _cache[0] || (_cache[0] = $event => ((query).value = $event)),
-          onKeydown: vue.withKeys(handleFetch, ["enter"]),
-          "data-aidp": __props.aidp
+          onKeydown: vue.withKeys(handleFetch, ["enter"])
         }, null, 40 /* PROPS, NEED_HYDRATION */, _hoisted_1), [
           [vue.vModelText, query.value]
         ]),
         vue.createElementVNode("button", {
           class: "aidp-button",
           type: "button",
-          onClick: handleFetch,
-          "data-aidp-button": __props.aidp
-        }, " ✔ ", 8 /* PROPS */, _hoisted_2),
-        vue.createElementVNode("div", {
-          class: "aidp-result",
-          "data-aidp-result": __props.aidp
-        }, vue.toDisplayString(result.value), 9 /* TEXT, PROPS */, _hoisted_3)
+          onClick: handleFetch
+        }, " ✔ "),
+        vue.createElementVNode("div", _hoisted_2, vue.toDisplayString(result.value), 1 /* TEXT */)
       ]))
     }
     }
@@ -132,7 +130,7 @@
       }
     }
 
-    var css_248z = "\ninput[data-v-6e72e974] {\r\n  margin-right: 0.5rem;\n}\r\n";
+    var css_248z = "\ninput[data-v-6e72e974] {\r\n  margin-right: 0.5rem;\n}\n.aidp-result[data-v-6e72e974] {\r\n  min-height: 1.5rem;\r\n  margin-top: 0.5rem;\n}\r\n";
     styleInject(css_248z);
 
     script.__scopeId = "data-v-6e72e974";

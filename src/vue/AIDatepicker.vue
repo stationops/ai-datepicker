@@ -1,11 +1,11 @@
 <script setup>
-import { ref } from 'vue';
-import {fetchDate, tryCatch} from "../core";
+import { ref, watch } from 'vue';
+import { fetchDate, tryCatch } from '../core';
 
 const props = defineProps({
-  aidp: {
+  modelValue: {
     type: String,
-    default: 'default'
+    default: ''
   },
   placeholder: {
     type: String,
@@ -25,11 +25,14 @@ const props = defineProps({
   }
 });
 
-const emit = defineEmits(['fetching', 'error', 'selected', 'done']);
+const emit = defineEmits(['update:modelValue', 'fetching', 'error', 'selected', 'done']);
 
 const query = ref('');
-const result = ref('');
+const result = ref(props.modelValue || '');
 
+watch(() => props.modelValue, (newVal) => {
+  result.value = newVal;
+});
 
 const handleFetch = async () => {
   emit('fetching');
@@ -40,6 +43,7 @@ const handleFetch = async () => {
     emit('error', error);
   } else {
     result.value = data;
+    emit('update:modelValue', data);
     emit('selected', data);
   }
 
@@ -62,8 +66,7 @@ const handleFetch = async () => {
     >
       ✔
     </button>
-    <div
-        class="aidp-result">
+    <div class="aidp-result">
       {{ result }}
     </div>
   </div>
@@ -72,5 +75,9 @@ const handleFetch = async () => {
 <style scoped>
 input {
   margin-right: 0.5rem;
+}
+.aidp-result {
+  min-height: 1.5rem;
+  margin-top: 0.5rem;
 }
 </style>

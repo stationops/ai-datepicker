@@ -55,17 +55,17 @@
         onDone?.(error);
       };
       return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("input", {
+        class: "aidp-date",
         placeholder: placeholder,
         value: query,
         onChange: e => setQuery(e.target.value),
-        onKeyDown: e => e.key === 'Enter' && handleFetch(),
-        "data-aidp": aidp
+        onKeyDown: e => e.key === 'Enter' && handleFetch()
       }), /*#__PURE__*/React.createElement("button", {
+        class: "aidp-button",
         type: "button",
-        onClick: handleFetch,
-        "data-aidp-button": aidp
+        onClick: handleFetch
       }, "\u2714"), /*#__PURE__*/React.createElement("div", {
-        "data-aidp-result": aidp
+        class: "aidp-result"
       }, result));
     }
 
