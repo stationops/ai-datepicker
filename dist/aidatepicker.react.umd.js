@@ -1,16 +1,17 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('react')) :
     typeof define === 'function' && define.amd ? define(['react'], factory) :
-    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.AIDatePicker = factory(global.React));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.AIDatepicker = factory(global.React));
 })(this, (function (React) { 'use strict';
 
-    const fetchDate = async query => {
+    const fetchDate = async function (query) {
       const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const response = await fetch(`http://localhost:8080/date?date=${encodeURIComponent(query)}&timezone=${timezone}`);
+      const baseUrl = window && window.AI_DATEPICKER_URL || 'http://localhost:8080';
+      const response = await fetch(`${baseUrl}?date=${encodeURIComponent(query)}&timezone=${timezone}`);
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
       return await response.text();
     };
-    const tryCatch = async promise => {
+    const tryCatch = async function (promise) {
       try {
         const data = await promise;
         return {
@@ -24,7 +25,8 @@
         };
       }
     };
-    function AIDatePicker({
+
+    function AIDatepicker({
       aidp = 'default',
       placeholder = 'Enter a date query',
       onFetching,
@@ -63,6 +65,6 @@
       }, result));
     }
 
-    return AIDatePicker;
+    return AIDatepicker;
 
 }));

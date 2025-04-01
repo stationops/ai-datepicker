@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>AI Date Picker Demo</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="../dist/aidatepicker.umd.js"></script> <!-- Replace with actual URL -->
+    <script src="../dist/aidatepicker.vue.umd.js"></script> <!-- Replace with actual URL -->
 </head>
 <body>
 <div id="app">
@@ -17,11 +17,11 @@
     createApp({
         methods: {
             onSelected(value) {
-                alert('You selected: ' + value);
+                console.log('You selected: ' + value);
             }
         }
     })
-        .component('ai-date-picker', AIDatePicker) // UMD default export
+        .component('ai-date-picker', AIDatepicker) // UMD default export
         .mount('#app');
 </script>
 </body>

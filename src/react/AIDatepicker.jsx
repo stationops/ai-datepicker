@@ -1,22 +1,9 @@
 import React, { useState } from 'react';
+import {fetchDate, tryCatch} from "../core";
 
-const fetchDate = async (query) => {
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const response = await fetch(`http://localhost:8080/date?date=${encodeURIComponent(query)}&timezone=${timezone}`);
-    if (!response.ok) throw new Error(`Server error: ${response.status}`);
-    return await response.text();
-};
 
-const tryCatch = async (promise) => {
-    try {
-        const data = await promise;
-        return { data, error: null };
-    } catch (error) {
-        return { data: null, error };
-    }
-};
 
-export default function AIDatePicker({ aidp = 'default', placeholder = 'Enter a date query', onFetching, onSelected, onError, onDone }) {
+export default function AIDatepicker({ aidp = 'default', placeholder = 'Enter a date query', onFetching, onSelected, onError, onDone }) {
     const [query, setQuery] = useState('');
     const [result, setResult] = useState('');
 

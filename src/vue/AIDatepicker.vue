@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {fetchDate} from "../core";
+import {fetchDate, tryCatch} from "../core";
 
 const props = defineProps({
   aidp: {

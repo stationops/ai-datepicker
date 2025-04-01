@@ -15,11 +15,11 @@
     const { createRoot } = ReactDOM;
 
     const App = () => {
-        return createElement(AIDatePicker, {
+        return createElement(AIDatepicker, {
             aidp: 'demo',
             placeholder: 'Try typing: next Monday',
             onSelected: (value) => {
-                alert('Selected date: ' + value);
+                console.log('Selected date: ' + value);
             },
             onError: (err) => {
                 console.error('Fetch error:', err);

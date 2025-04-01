@@ -7,11 +7,11 @@ import babel from '@rollup/plugin-babel';
 
 // Vue build
 const vueConfig = {
-    input: 'src/vue/AIDatePicker.vue',
+    input: 'src/vue/AIDatepicker.vue',
     output: {
         file: 'dist/aidatepicker.vue.umd.js',
         format: 'umd',
-        name: 'AIDatePickerVue',
+        name: 'AIDatepicker',
         globals: {
             vue: 'Vue'
         }
@@ -25,13 +25,28 @@ const vueConfig = {
     ]
 };
 
+
+const jsConfig = {
+    input: 'src/js/index.js',
+    output: {
+        file: 'dist/aidatepicker.js.umd.js',
+        format: 'umd',
+        name: 'AIDatepicker'
+    },
+    plugins: [
+        resolve(),
+        commonjs(),
+        postcss()
+    ]
+};
+
 // React build
 const reactConfig = {
-    input: 'src/react/AIDatePicker.jsx',
+    input: 'src/react/AIDatepicker.jsx',
     output: {
         file: 'dist/aidatepicker.react.umd.js',
         format: 'umd',
-        name: 'AIDatePicker', // will be available as window.AIDatePicker
+        name: 'AIDatepicker', // will be available as window.AIDatepicker
         globals: {
             react: 'React',
             'react-dom': 'ReactDOM'
@@ -49,4 +64,4 @@ const reactConfig = {
     ]
 };
 
-export default [vueConfig, reactConfig];
+export default [vueConfig, reactConfig, jsConfig];
