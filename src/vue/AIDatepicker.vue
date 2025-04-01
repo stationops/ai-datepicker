@@ -48,7 +48,7 @@ const handleFetch = async () => {
         @click="handleFetch"
         :data-aidp-button="aidp"
     >
-      Fetch
+      ✔
     </button>
     <div :data-aidp-result="aidp">
       {{ result }}

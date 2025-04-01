@@ -32,7 +32,7 @@ export default function AIDatepicker({ aidp = 'default', placeholder = 'Enter a 
                 data-aidp={aidp}
             />
             <button type="button" onClick={handleFetch} data-aidp-button={aidp}>
-                Fetch
+                ✔
             </button>
             <div data-aidp-result={aidp}>{result}</div>
         </div>

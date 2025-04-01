@@ -5,7 +5,7 @@
 
     const fetchDate = async function(query) {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const baseUrl = (window && window.AI_DATEPICKER_URL) || 'http://localhost:8080';
+        const baseUrl = (window && window.AI_DATEPICKER_URL) || 'https://aidatepicker.com';
         const response = await fetch(`${baseUrl}?date=${encodeURIComponent(query)}&timezone=${timezone}`);
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
 

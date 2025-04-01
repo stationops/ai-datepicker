@@ -6,7 +6,7 @@
 
     const fetchDate = async function(query) {
         const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        const baseUrl = (window && window.AI_DATEPICKER_URL) || 'http://localhost:8080';
+        const baseUrl = (window && window.AI_DATEPICKER_URL) || 'https://aidatepicker.com';
         const response = await fetch(`${baseUrl}?date=${encodeURIComponent(query)}&timezone=${timezone}`);
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
@@ -78,7 +78,7 @@
           type: "button",
           onClick: handleFetch,
           "data-aidp-button": __props.aidp
-        }, " Fetch ", 8 /* PROPS */, _hoisted_2),
+        }, " ✔ ", 8 /* PROPS */, _hoisted_2),
         vue.createElementVNode("div", { "data-aidp-result": __props.aidp }, vue.toDisplayString(result.value), 9 /* TEXT, PROPS */, _hoisted_3)
       ]))
     }
