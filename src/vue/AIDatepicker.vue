@@ -38,19 +38,23 @@ const handleFetch = async () => {
 <template>
   <div>
     <input
+        class="aidp-date"
         :placeholder="placeholder"
         v-model="query"
         @keydown.enter="handleFetch"
         :data-aidp="aidp"
     />
     <button
+        class="aidp-button"
         type="button"
         @click="handleFetch"
         :data-aidp-button="aidp"
     >
       ✔
     </button>
-    <div :data-aidp-result="aidp">
+    <div
+        class="aidp-result"
+        :data-aidp-result="aidp">
       {{ result }}
     </div>
   </div>
