@@ -2,7 +2,7 @@
 
 A lightweight, AI-powered date picker that understands natural language like:
 
-> “Next Friday” • “3 days from now” • “1st Monday of May” • “tomorrow at 5pm”
+> “Next Friday” • “3 days from now” • “1st Monday of May” • “tomorrow” • “31st August 1990”
 
 ---
 
